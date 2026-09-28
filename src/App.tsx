@@ -6,7 +6,6 @@ import { USER_ID } from './api/todos';
 import { getTodos } from './api/todos';
 import { Todo } from './types/Todo';
 import { TodoItem } from './components/TodoItem';
-// import { todo } from 'node:test';
 
 export const App: React.FC = () => {
   const [todos, setTodos] = useState<Todo[]>([]);
@@ -15,12 +14,10 @@ export const App: React.FC = () => {
 
   function loadTodos() {
     setErrorMessage('');
-    setIsLoading(true);
 
     getTodos()
       .then(setTodos)
-      .catch(() => setErrorMessage('Unable to load todos')) // 'Unable to delete a todo' 'Unable to update a todo'
-      .finally(() => setIsLoading(false));
+      .catch(() => setErrorMessage('Unable to load todos')); // 'Unable to delete a todo' 'Unable to update a todo'
   }
 
   useEffect(loadTodos, []);
