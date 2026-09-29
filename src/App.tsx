@@ -8,18 +8,20 @@ import { Todo } from './types/Todo';
 import { TodoItem } from './components/TodoItem';
 import { Footer } from './components/Footer';
 import { ErrorNotification } from './components/ErrorNotification';
+import { ErrorMessage } from './utils/errors';
+import { FilterType } from './utils/filter';
 
 export const App: React.FC = () => {
   const [todos, setTodos] = useState<Todo[]>([]);
   const [errorMessage, setErrorMessage] = useState('');
-  const [filter, setFilter] = useState<'all' | 'active' | 'completed'>('all');
+  const [filter, setFilter] = useState<FilterType>(FilterType.All);
 
   function loadTodos() {
     setErrorMessage('');
 
     getTodos()
       .then(setTodos)
-      .catch(() => setErrorMessage('Unable to load todos')); // 'Unable to delete a todo' 'Unable to update a todo'
+      .catch(() => setErrorMessage(ErrorMessage.Load));
   }
 
   useEffect(loadTodos, []);
@@ -36,13 +38,13 @@ export const App: React.FC = () => {
 
   const visibleTodos = todos.filter(todo => {
     switch (filter) {
-      case 'active':
+      case FilterType.Active:
         return todo.completed === false;
 
-      case 'completed':
+      case FilterType.Completed:
         return todo.completed === true;
 
-      case 'all':
+      case FilterType.All:
       default:
         return true;
     }

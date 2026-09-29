@@ -1,9 +1,11 @@
 import React from 'react';
+import { FilterType } from '../utils/filter';
+import classNames from 'classnames';
 
 type Props = {
   activeCount: number;
-  filter: 'all' | 'active' | 'completed';
-  setFilter: (filter: 'all' | 'active' | 'completed') => void;
+  filter: FilterType;
+  setFilter: (filter: FilterType) => void;
 };
 
 export const Footer: React.FC<Props> = ({ activeCount, filter, setFilter }) => {
@@ -17,27 +19,33 @@ export const Footer: React.FC<Props> = ({ activeCount, filter, setFilter }) => {
       <nav className="filter" data-cy="Filter">
         <a
           href="#/"
-          className={`filter__link ${filter === 'all' ? 'selected' : ''}`}
+          className={classNames('filter__link', {
+            selected: filter === FilterType.All,
+          })}
           data-cy="FilterLinkAll"
-          onClick={() => setFilter('all')}
+          onClick={() => setFilter(FilterType.All)}
         >
           All
         </a>
 
         <a
           href="#/active"
-          className={`filter__link ${filter === 'active' ? 'selected' : ''}`}
+          className={classNames('filter__link', {
+            selected: filter === FilterType.Active,
+          })}
           data-cy="FilterLinkActive"
-          onClick={() => setFilter('active')}
+          onClick={() => setFilter(FilterType.Active)}
         >
           Active
         </a>
 
         <a
           href="#/completed"
-          className={`filter__link ${filter === 'completed' ? 'selected' : ''}`}
+          className={classNames('filter__link', {
+            selected: filter === FilterType.Completed,
+          })}
           data-cy="FilterLinkCompleted"
-          onClick={() => setFilter('completed')}
+          onClick={() => setFilter(FilterType.Completed)}
         >
           Completed
         </a>
